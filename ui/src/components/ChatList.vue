@@ -36,7 +36,7 @@ export default {
     },
     methods: {
          randomPos() {
-            return Math.floor(Math.random() * 60) + '%'
+            return Math.floor(Math.random() * 60* Math.random() * 5) + '%'
         },
         sendMessage() {
             if (this.message === '') {
@@ -48,7 +48,7 @@ export default {
                 message: this.message,
                 time: new Date(),
                 style: {
-                    top: this.randomPos(),
+                    top: this.randomPos() ,
                     left:  this.randomPos()
                 }
             })

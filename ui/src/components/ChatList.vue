@@ -36,7 +36,7 @@ export default {
     },
     methods: {
          randomPos() {
-            return Math.floor(Math.random() * 60* Math.random() * 5) + '%'
+            return Math.floor(Math.random() * 50) + '%'
         },
         sendMessage() {
             if (this.message === '') {

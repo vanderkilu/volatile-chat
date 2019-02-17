@@ -26,6 +26,7 @@ export default {
         font-size: 1rem;
         color: #9e9e9e;
         position: absolute;
+        z-index: 1;
     }
     .chat__initial {
         grid-row: 1 / span 2;

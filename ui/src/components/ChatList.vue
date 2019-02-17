@@ -61,7 +61,7 @@ export default {
                     this.chats = this.chats.splice(0, index)
                 }
             })
-            setTimeout(this.lru, 500);
+            setTimeout(this.lru, 10)
         }
     },
     beforeMount() {

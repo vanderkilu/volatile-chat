@@ -7,13 +7,14 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "async": "^2.6.2",
     "socket.io-client": "^2.1.1",
     "vue": "^2.5.17",
     "vue-router": "^3.0.1"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.0.4",
-    "@vue/cli-service": "^3.0.4",
+    "@vue/cli-plugin-babel": "^3.5.5",
+    "@vue/cli-service": "^3.5.3",
     "vue-template-compiler": "^2.5.17"
   },
   "postcss": {

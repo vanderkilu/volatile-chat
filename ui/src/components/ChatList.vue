@@ -1,26 +1,27 @@
 <template>
     <div class="wrapper">
-        <div class="chat-container">
-            <div class="chat-container__body">
-                <transition-group name="message">
-                    <app-chat v-for="(chat,i) in chats" :key="i" :chat="chat"></app-chat>
-                </transition-group>
-            </div>
-            <form class="chat-container__form" @submit.prevent="sendMessage">
+        <div class="chatarea">
+            <transition-group name="message">
+                <app-chat v-for="(chat,i) in chats" :key="i" :chat="chat"></app-chat>
+            </transition-group>
+        </div>
+        <div class="div chat-form">
+            <form class="form" @submit.prevent="sendMessage">
                 <input type="text" 
                 placeholder="enter your message" 
                 class="input"
                 v-model="message">
-                <button class="btn">send message</button>
+                <button class="btn">send</button>
             </form>
         </div>
+       
     </div>
 </template>
 
 
 <script>
 import Chat from './Chat.vue'
-import { getUsername, isDue} from '../service'
+import { getUsername, getRandomPos} from '../service'
 import io from 'socket.io-client'
 export default {
     data() {
@@ -41,9 +42,6 @@ export default {
         appChat: Chat
     },
     methods: {
-         randomPos() {
-            return Math.floor(Math.random() * 50) + '%'
-        },
         sendMessage() {
             if (this.message === '') {
                 this.isError = true
@@ -53,8 +51,8 @@ export default {
                 username: this.username,
                 message: this.message,
                 style: {
-                    top: this.randomPos() ,
-                    left:  this.randomPos()
+                    top: getRandomPos().y ,
+                    left:  getRandomPos().x
                 }
             })
             this.message = ''
@@ -79,49 +77,43 @@ export default {
 
 <style scoped>
 .wrapper {
-    width: 95%;
-    margin: 1rem auto;
-}
-.chat-container {
-    box-shadow: 0 1rem 2rem rgba(0,0,0,0.03);
     background-color: #183048;
-    padding: 4rem 8rem;
-    height: 80vh;
-    display: flex;
-    flex-direction: column;
-}
-.chat-container__body {
-    flex: 5;
+    padding: 4rem 8rem; 
+    height: 90vh;
     position: relative;
 }
-.chat-container__form {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.chat-form {
+    position: absolute;
+    left: 50%;
+    bottom: 4rem;
+    transform: translateX(-50%);
+    width: 100%;
+
+}
+.form {
+     display: flex;
+     padding: 0 20rem;
 }
 .input {
-    padding: 2rem;
-    background-color: white;
+    padding: 1.4rem 2rem;
+    background-color: transparent;
     border: none;
     border-radius: 3px;
-    flex-basis: 70%;
+    border: 1px solid white;
+    width: 100%;
+    color: white;
     box-shadow: 0 0.2rem 1rem rgba(0,0,0,0.03);
 }
 .btn {
-    display: flex;
-    width: 5rem;
-    height: 5rem;
+    display: inline;
     border: none;
     border-radius: 3px;
-    flex: 30%;
-    padding: 1rem;
-    justify-content: center;
-    align-items: center;
+    border: 1px solid white;
+    padding: 1.4rem 6rem;
     margin-left: 1rem;
     box-shadow: 0 0.1rem 0.2rem rgba(0,0,0,0.03);
-    background-color: white;
-    color: #183048;
+    background-color: transparent;
+    color: white;
     cursor: pointer;
 }
 .btn:focus, .btn:active {

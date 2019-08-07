@@ -2,7 +2,7 @@
     <div class="wrapper">
         <div class="chatarea">
             <transition-group name="message">
-                <app-chat v-for="(chat,i) in chats" :key="i" :chat="chat"></app-chat>
+                <app-chat v-for="chat in chats" :key="chat" :chat="chat"></app-chat>
             </transition-group>
         </div>
         <div class="div chat-form">
@@ -21,7 +21,7 @@
 
 <script>
 import Chat from './Chat.vue'
-import { getUsername, getRandomPos} from '../service'
+import { getUsername} from '../service'
 import io from 'socket.io-client'
 export default {
     data() {
@@ -42,6 +42,14 @@ export default {
         appChat: Chat
     },
     methods: {
+        generateRandomPos() {
+            const size = ((Math.random()*100) + 50).toFixed()
+            const x = (Math.random() * (document.body.clientWidth - 200 - size)).toFixed(2)
+            const y = (Math.random() * (document.body.clientHeight - 400 - size)).toFixed(2)
+            return {
+                x,y
+            }
+        },
         sendMessage() {
             if (this.message === '') {
                 this.isError = true
@@ -51,8 +59,8 @@ export default {
                 username: this.username,
                 message: this.message,
                 style: {
-                    top: getRandomPos().y ,
-                    left:  getRandomPos().x
+                    top:  this.generateRandomPos().y + 'px',
+                    left: this.generateRandomPos().x + 'px'
                 }
             })
             this.message = ''

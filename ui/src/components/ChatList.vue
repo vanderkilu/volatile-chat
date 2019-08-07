@@ -11,7 +11,7 @@
                 placeholder="enter your message" 
                 class="input"
                 v-model="message">
-                <button class="btn">s</button>
+                <button class="btn">send message</button>
             </form>
         </div>
     </div>
@@ -26,10 +26,16 @@ export default {
     data() {
         return {
             message: '',
-            socket: io('localhost:3000'),
+            socket: io('http://192.168.43.156:3000'),
             chats: [],
             isError: false,
         }
+    },
+    beforeRouteEnter (to, from, next) {
+        if(getUsername() === null ) {
+           this.$router.push({name: 'home'})
+        }
+        next()
     },
     components: {
         appChat: Chat
@@ -46,7 +52,6 @@ export default {
             this.socket.emit('SEND_MESSAGE', {
                 username: this.username,
                 message: this.message,
-                time: new Date(),
                 style: {
                     top: this.randomPos() ,
                     left:  this.randomPos()
@@ -55,13 +60,10 @@ export default {
             this.message = ''
         },
         lru() {
-             this.chats.forEach((chat)=> {
-                if (isDue(chat.time, new Date())) {
-                    let index = this.chats.indexOf(chat)
-                    this.chats = this.chats.splice(0, index)
-                }
-            })
-            setTimeout(this.lru, 10)
+            setTimeout(()=> {
+                this.chats.shift()
+                this.lru()
+            }, 8000)
         }
     },
     beforeMount() {
@@ -77,12 +79,12 @@ export default {
 
 <style scoped>
 .wrapper {
-    width: 90%;
-    margin: 2rem auto;
+    width: 95%;
+    margin: 1rem auto;
 }
 .chat-container {
     box-shadow: 0 1rem 2rem rgba(0,0,0,0.03);
-    background-color: #f5f5f5;
+    background-color: #183048;
     padding: 4rem 8rem;
     height: 80vh;
     display: flex;
@@ -99,26 +101,27 @@ export default {
     justify-content: center;
 }
 .input {
-    padding: 1.5rem 2rem;
+    padding: 2rem;
     background-color: white;
     border: none;
-    border-radius: 6rem;
+    border-radius: 3px;
     flex-basis: 70%;
-    box-shadow: 0 1rem 2rem rgba(0,0,0,0.03);
+    box-shadow: 0 0.2rem 1rem rgba(0,0,0,0.03);
 }
 .btn {
     display: flex;
     width: 5rem;
     height: 5rem;
     border: none;
-    border-radius: 50%;
+    border-radius: 3px;
+    flex: 30%;
     padding: 1rem;
     justify-content: center;
     align-items: center;
     margin-left: 1rem;
-    box-shadow: 0 1rem 2rem #f3e5f5;
-    background-color: #f3e5f5;
-    color: #4a148c;
+    box-shadow: 0 0.1rem 0.2rem rgba(0,0,0,0.03);
+    background-color: white;
+    color: #183048;
     cursor: pointer;
 }
 .btn:focus, .btn:active {

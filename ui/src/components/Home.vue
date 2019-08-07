@@ -44,7 +44,7 @@ export default {
 <style scoped>
     .container {
         padding: 6rem 12rem;
-        background-image: linear-gradient(#4a148c);
+        background-color: #183048;
         height: 85vh;
         background-position: cover;
         display: flex;

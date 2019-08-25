@@ -1,10 +1,8 @@
 const express = require('express');
+const http = require('http')
 const app = express();
 
-const server = app.listen(process.env.PORT || 3000, function(err) {
-    if (err) console.log(err);
-    console.log('server is running');
-});
+const server = http.createServer(app)
 
 const io = require('socket.io')(server);
 io.on('connection', function(socket) {
@@ -19,3 +17,8 @@ if (process.env.NODE_ENV === 'production') {
 app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "ui", "dist", "index.html"))
 })
+
+server.listen(process.env.PORT || 3000, function(err) {
+    if (err) console.log(err);
+    console.log('server is running');
+});

@@ -27,7 +27,7 @@ export default {
     data() {
         return {
             message: '',
-            socket: io('http://192.168.43.156:3000'),
+            socket: io(),
             chats: [],
             isError: false,
         }
@@ -44,8 +44,8 @@ export default {
     methods: {
         generateRandomPos() {
             const size = ((Math.random()*100) + 50).toFixed()
-            const x = (Math.random() * (document.body.clientWidth - 200 - size)).toFixed(2)
-            const y = (Math.random() * (document.body.clientHeight - 400 - size)).toFixed(2)
+            const x = (Math.random() * (window.innerWidth - 200 - size)).toFixed(2)
+            const y = (Math.random() * (window.innerHeight - 400 - size)).toFixed(2)
             return {
                 x,y
             }
